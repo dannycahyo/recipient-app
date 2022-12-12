@@ -1,25 +1,21 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import RecipientForm from "./component/RecipientForm";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1 className="text-2xl font-bold underline">Hello world!</h1>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mx-auto py-6">
+      <div className="md:grid md:grid-cols-4 lg:grid-cols-3 gap-10">
+        <div className="md:col-span-2 lg:col-span-1">
+          <RecipientForm />
+        </div>
+        <div className="mt-5 md:col-span-2 md:mt-0 lg:col-span-2">
+          <div className="px-4 sm:px-0">
+            <h3 className="text-lg font-medium leading-6 text-gray-900">
+              List Recipients
+            </h3>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
