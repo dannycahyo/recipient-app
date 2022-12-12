@@ -1,0 +1,11 @@
+{
+    "recipients": [
+        {
+            "name": "Jonny Rogers",
+            "description": "Transfer Payroll",
+            "amount": 8120000,
+            "tax": 10,
+            "discount": 10
+        }
+    ]
+}
