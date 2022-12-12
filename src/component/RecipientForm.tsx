@@ -1,7 +1,7 @@
-import React from "react";
 import { Formik, Form, Field } from "formik";
 import { RecipientSchema } from "../form-schema/recipientSchema";
-
+import useRecipient from "../hooks/useRecipient";
+import { nanoid } from "nanoid";
 namespace Caption {
   export const name = "Name";
   export const description = "Description";
@@ -12,6 +12,7 @@ namespace Caption {
 }
 
 const RecipientForm = () => {
+  const { addNewRecipient } = useRecipient();
   return (
     <Formik
       initialValues={{
@@ -23,7 +24,7 @@ const RecipientForm = () => {
       }}
       validationSchema={RecipientSchema}
       onSubmit={(values) => {
-        console.log(values);
+        addNewRecipient({ ...values, id: nanoid() });
       }}
     >
       {({ errors, touched }) => (

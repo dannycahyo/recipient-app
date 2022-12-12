@@ -1,5 +1,5 @@
-import React from "react";
 import RecipientForm from "./component/RecipientForm";
+import RecipientList from "./component/RecipientList";
 
 function App() {
   return (
@@ -9,11 +9,7 @@ function App() {
           <RecipientForm />
         </div>
         <div className="mt-5 md:col-span-2 md:mt-0 lg:col-span-2">
-          <div className="px-4 sm:px-0">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">
-              List Recipients
-            </h3>
-          </div>
+          <RecipientList />
         </div>
       </div>
     </div>
