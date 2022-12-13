@@ -108,6 +108,13 @@ const RecipientList = () => {
               </div>
             </button>
           )}
+
+          <button className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
+            Undo
+          </button>
+          <button className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
+            Redo
+          </button>
         </div>
       </div>
 
@@ -223,7 +230,7 @@ const RecipientList = () => {
       </div>
 
       <div className="flex flex-row-reverse px-4 py-3">
-        {filteredRecipients?.length !== 0 && (
+        {filteredRecipients?.length !== 0 && recipients !== undefined && (
           <div>
             <div className="flex justify-between gap-10 items-center">
               <p className="text-gray-400 text-sm">{Caption.recipient}</p>
