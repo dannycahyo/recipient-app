@@ -161,56 +161,62 @@ const RecipientList = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {filteredRecipients?.map((recipient) => (
-                      <tr key={recipient.id}>
-                        <td className="py-3 pl-4">
-                          <div className="flex items-center h-5">
-                            <input
-                              type="checkbox"
-                              className="text-blue-600 border-gray-200 rounded focus:ring-blue-500"
-                              onChange={(event) => {
-                                if (event.target.checked) {
-                                  setSelectedRecipients((prevRecipient) => [
-                                    ...prevRecipient,
-                                    recipient.id,
-                                  ]);
-                                } else {
-                                  setSelectedRecipients((prevRecipients) =>
-                                    prevRecipients.filter(
-                                      (prevRecipient) =>
-                                        prevRecipient !== recipient.id
-                                    )
-                                  );
-                                }
-                              }}
-                            />
-                            <label htmlFor="checkbox" className="sr-only">
-                              Checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          {recipient.name}
-                        </td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          {recipient.description}
-                        </td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          {recipient.amount}
-                        </td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          {recipient.tax !== 0 ? `${recipient.tax} %` : "-"}
-                        </td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          {recipient.discount !== 0
-                            ? `${recipient.discount} %`
-                            : "-"}
-                        </td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                          {recipient.total}
-                        </td>
-                      </tr>
-                    ))}
+                    {filteredRecipients?.length === 0 ? (
+                      <p>Empty Recipient</p>
+                    ) : (
+                      <>
+                        {filteredRecipients?.map((recipient) => (
+                          <tr key={recipient.id}>
+                            <td className="py-3 pl-4">
+                              <div className="flex items-center h-5">
+                                <input
+                                  type="checkbox"
+                                  className="text-blue-600 border-gray-200 rounded focus:ring-blue-500"
+                                  onChange={(event) => {
+                                    if (event.target.checked) {
+                                      setSelectedRecipients((prevRecipient) => [
+                                        ...prevRecipient,
+                                        recipient.id,
+                                      ]);
+                                    } else {
+                                      setSelectedRecipients((prevRecipients) =>
+                                        prevRecipients.filter(
+                                          (prevRecipient) =>
+                                            prevRecipient !== recipient.id
+                                        )
+                                      );
+                                    }
+                                  }}
+                                />
+                                <label htmlFor="checkbox" className="sr-only">
+                                  Checkbox
+                                </label>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                              {recipient.name}
+                            </td>
+                            <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                              {recipient.description}
+                            </td>
+                            <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                              {recipient.amount}
+                            </td>
+                            <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                              {recipient.tax !== 0 ? `${recipient.tax} %` : "-"}
+                            </td>
+                            <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                              {recipient.discount !== 0
+                                ? `${recipient.discount} %`
+                                : "-"}
+                            </td>
+                            <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                              {recipient.total}
+                            </td>
+                          </tr>
+                        ))}
+                      </>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -220,36 +226,40 @@ const RecipientList = () => {
       </div>
 
       <div className="flex flex-row-reverse px-4 py-3">
-        <div>
-          <div className="flex justify-between gap-10 items-center">
-            <p className="text-gray-400 text-sm">Recipient</p>
-            <p className="text-gray-400 text-sm">{`${totalRecipients} Recipients`}</p>
-          </div>
+        {filteredRecipients?.length !== 0 && (
+          <div>
+            <div className="flex justify-between gap-10 items-center">
+              <p className="text-gray-400 text-sm">Recipient</p>
+              <p className="text-gray-400 text-sm">{`${totalRecipients} Recipients`}</p>
+            </div>
 
-          <div className="flex justify-between gap-10 items-center">
-            <p className="text-sm mt-2 font-bold">Total Tax</p>
-            <p className="text-sm">{`Rp ${getTotalTax(filteredRecipients)}`}</p>
-          </div>
+            <div className="flex justify-between gap-10 items-center">
+              <p className="text-sm mt-2 font-bold">Total Tax</p>
+              <p className="text-sm">{`Rp ${getTotalTax(
+                filteredRecipients
+              )}`}</p>
+            </div>
 
-          <div className="flex justify-between gap-10 items-center">
-            <p className="text-sm mt-2 font-bold">Total Discount</p>
-            <p className="text-sm">{`Rp ${getTotalDiscount(
-              filteredRecipients
-            )}`}</p>
-          </div>
+            <div className="flex justify-between gap-10 items-center">
+              <p className="text-sm mt-2 font-bold">Total Discount</p>
+              <p className="text-sm">{`Rp ${getTotalDiscount(
+                filteredRecipients
+              )}`}</p>
+            </div>
 
-          <div className="flex justify-between gap-10 items-center">
-            <p className="text-sm mt-2 font-bold">Total Amount</p>
-            <p className="text-sm">{`Rp ${getTotalAmount(
-              filteredRecipients
-            )}`}</p>
-          </div>
+            <div className="flex justify-between gap-10 items-center">
+              <p className="text-sm mt-2 font-bold">Total Amount</p>
+              <p className="text-sm">{`Rp ${getTotalAmount(
+                filteredRecipients
+              )}`}</p>
+            </div>
 
-          <div className="flex justify-between gap-10 items-center">
-            <p className="text-sm mt-2 font-bold">Total</p>
-            <p className="text-sm">{`Rp ${getTotal(filteredRecipients)}`}</p>
+            <div className="flex justify-between gap-10 items-center">
+              <p className="text-sm mt-2 font-bold">Total</p>
+              <p className="text-sm">{`Rp ${getTotal(filteredRecipients)}`}</p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
