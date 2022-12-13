@@ -24,7 +24,23 @@ const RecipientForm = () => {
       }}
       validationSchema={RecipientSchema}
       onSubmit={(values, actions) => {
-        addNewRecipient({ ...values, id: nanoid() });
+        const calculateTotal = (
+          amount: number,
+          tax: number,
+          discount: number
+        ) => {
+          const amountDiscount = (amount * discount) / 100;
+          const amountTax = (amount * tax) / 100;
+
+          const amountMinusTax = amount - amountTax;
+
+          return amountMinusTax + amountDiscount;
+        };
+        addNewRecipient({
+          ...values,
+          id: nanoid(),
+          total: calculateTotal(values.amount, values.tax, values.discount),
+        });
         actions.resetForm({
           values: {
             name: "",

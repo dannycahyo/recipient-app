@@ -5,4 +5,5 @@ export type Recipient = {
   amount: number;
   tax: number;
   discount: number;
+  total: number;
 };

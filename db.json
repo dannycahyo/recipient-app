@@ -2,11 +2,12 @@
     "recipients": [
         {
             "name": "Jonny Rogers",
-            "id": "1303kdhdkhd",
             "description": "Transfer Payroll",
-            "amount": 8120000,
-            "tax": 10,
-            "discount": 10
+            "amount": "8120000",
+            "tax": "11",
+            "discount": "10",
+            "id": "v9yrm4hEZMFmpFoIZK2E9",
+            "total": 8038800
         }
     ]
 }
