@@ -1,20 +1,36 @@
 import React from "react";
 import useRecipient from "../hooks/useRecipient";
 import { Recipient } from "../types/recipient";
+import { HStack } from "../uikit/HStack";
 import { BsSearch, BsFillTrashFill } from "react-icons/bs";
+
+namespace Caption {
+  export const name = "Name";
+  export const description = "Description";
+  export const amount = "Amount";
+  export const tax = "Tax";
+  export const discount = "Discount";
+  export const recipient = "Recipient";
+  export const recipientList = "List Recipients";
+  export const totalTax = "Total Tax";
+  export const totalDiscount = "Total Discount";
+  export const totalAmount = "Total Amount";
+  export const total = "Total";
+  export const emptyRecipient = "Empty Recipient";
+}
 
 const RecipientList = () => {
   const { recipients, deleteRecipientById } = useRecipient();
   const [searchRecipient, setSearchRecipient] = React.useState<string>("");
 
-  const [selectedRecipients, setSelectedRecipients] = React.useState<string[]>(
-    []
-  );
+  const [selectedRecipientsId, setSelectedRecipientsId] = React.useState<
+    string[]
+  >([]);
 
-  const handleDeleteRecipient = (selectedRecipients: string[]) => {
-    selectedRecipients.forEach((recipientId: string) => {
+  const handleDeleteRecipient = (selectedRecipientsId: string[]) => {
+    selectedRecipientsId.forEach((recipientId: string) => {
       deleteRecipientById(recipientId);
-      setSelectedRecipients((prevRecipients) =>
+      setSelectedRecipientsId((prevRecipients) =>
         prevRecipients.filter((prevRecipient) => prevRecipient !== recipientId)
       );
     });
@@ -66,7 +82,7 @@ const RecipientList = () => {
   return (
     <div className="px-4 sm:px-0 overflow-x-auto">
       <h3 className="text-lg font-medium leading-6 text-gray-900">
-        List Recipients
+        {Caption.recipientList}
       </h3>
 
       <div className="mt-2 flex justify-between items-center">
@@ -84,11 +100,11 @@ const RecipientList = () => {
         </div>
 
         <div className="pr-6 flex gap-4">
-          {selectedRecipients.length !== 0 && (
-            <button onClick={() => handleDeleteRecipient(selectedRecipients)}>
+          {selectedRecipientsId.length !== 0 && (
+            <button onClick={() => handleDeleteRecipient(selectedRecipientsId)}>
               <div className="flex gap-2 justify-center items-center">
                 <BsFillTrashFill color="red" />
-                <p className="text-red-500 text-sm">{`Delete ${selectedRecipients.length} selected`}</p>
+                <p className="text-red-500 text-sm">{`Delete ${selectedRecipientsId.length} selected`}</p>
               </div>
             </button>
           )}
@@ -103,59 +119,47 @@ const RecipientList = () => {
                 <table className="min-w-full divide-y divide-gray-200 table-auto">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th scope="col" className="py-3 pl-4">
-                        <div className="flex items-center h-5">
-                          <input
-                            id="checkbox-all"
-                            type="checkbox"
-                            className="text-blue-600 border-gray-200 rounded focus:ring-blue-500"
-                          />
-                          <label htmlFor="checkbox" className="sr-only">
-                            Checkbox
-                          </label>
-                        </div>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
+                      >
+                        {Caption.name}
                       </th>
                       <th
                         scope="col"
                         className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
                       >
-                        Name
+                        {Caption.description}
                       </th>
                       <th
                         scope="col"
                         className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
                       >
-                        Description
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
-                      >
-                        Amount
+                        {Caption.amount}
                       </th>
                       <th
                         scope="col"
                         className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
                       >
-                        Tax
+                        {Caption.tax}
                       </th>
                       <th
                         scope="col"
                         className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
                       >
-                        Discount
+                        {Caption.discount}
                       </th>
                       <th
                         scope="col"
                         className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
                       >
-                        Total
+                        {Caption.total}
                       </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {filteredRecipients?.length === 0 ? (
-                      <p>Empty Recipient</p>
+                      <p>{Caption.emptyRecipient}</p>
                     ) : (
                       <>
                         {filteredRecipients?.map((recipient) => (
@@ -167,23 +171,23 @@ const RecipientList = () => {
                                   className="text-blue-600 border-gray-200 rounded focus:ring-blue-500"
                                   onChange={(event) => {
                                     if (event.target.checked) {
-                                      setSelectedRecipients((prevRecipient) => [
-                                        ...prevRecipient,
-                                        recipient.id,
-                                      ]);
+                                      setSelectedRecipientsId(
+                                        (prevRecipient) => [
+                                          ...prevRecipient,
+                                          recipient.id,
+                                        ]
+                                      );
                                     } else {
-                                      setSelectedRecipients((prevRecipients) =>
-                                        prevRecipients.filter(
-                                          (prevRecipient) =>
-                                            prevRecipient !== recipient.id
-                                        )
+                                      setSelectedRecipientsId(
+                                        (prevRecipients) =>
+                                          prevRecipients.filter(
+                                            (prevRecipient) =>
+                                              prevRecipient !== recipient.id
+                                          )
                                       );
                                     }
                                   }}
                                 />
-                                <label htmlFor="checkbox" className="sr-only">
-                                  Checkbox
-                                </label>
                               </div>
                             </td>
                             <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
@@ -222,35 +226,35 @@ const RecipientList = () => {
         {filteredRecipients?.length !== 0 && (
           <div>
             <div className="flex justify-between gap-10 items-center">
-              <p className="text-gray-400 text-sm">Recipient</p>
+              <p className="text-gray-400 text-sm">{Caption.recipient}</p>
               <p className="text-gray-400 text-sm">{`${totalRecipients} Recipients`}</p>
             </div>
 
-            <div className="flex justify-between gap-10 items-center">
-              <p className="text-sm mt-2 font-bold">Total Tax</p>
+            <HStack>
+              <p className="text-sm mt-2 font-bold">{Caption.totalTax}</p>
               <p className="text-sm">{`Rp ${getTotalTax(
                 filteredRecipients
               )}`}</p>
-            </div>
+            </HStack>
 
-            <div className="flex justify-between gap-10 items-center">
-              <p className="text-sm mt-2 font-bold">Total Discount</p>
+            <HStack>
+              <p className="text-sm mt-2 font-bold">{Caption.totalDiscount}</p>
               <p className="text-sm">{`Rp ${getTotalDiscount(
                 filteredRecipients
               )}`}</p>
-            </div>
+            </HStack>
 
-            <div className="flex justify-between gap-10 items-center">
-              <p className="text-sm mt-2 font-bold">Total Amount</p>
+            <HStack>
+              <p className="text-sm mt-2 font-bold">{Caption.totalAmount}</p>
               <p className="text-sm">{`Rp ${getTotalAmount(
                 filteredRecipients
               )}`}</p>
-            </div>
+            </HStack>
 
-            <div className="flex justify-between gap-10 items-center">
-              <p className="text-sm mt-2 font-bold">Total</p>
+            <HStack>
+              <p className="text-sm mt-2 font-bold">{Caption.total}</p>
               <p className="text-sm">{`Rp ${getTotal(filteredRecipients)}`}</p>
-            </div>
+            </HStack>
           </div>
         )}
       </div>
