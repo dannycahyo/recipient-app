@@ -99,7 +99,7 @@ const RecipientList = () => {
           />
         </div>
 
-        <div className="pr-6 flex gap-4">
+        <div className="flex gap-2">
           {selectedRecipientsId.length !== 0 && (
             <button onClick={() => handleDeleteRecipient(selectedRecipientsId)}>
               <div className="flex gap-2 justify-center items-center">
@@ -109,10 +109,10 @@ const RecipientList = () => {
             </button>
           )}
 
-          <button className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
+          <button className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 py-2 px-2 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
             Undo
           </button>
-          <button className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
+          <button className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 py-2 px-2 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
             Redo
           </button>
         </div>
