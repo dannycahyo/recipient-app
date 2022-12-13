@@ -1,5 +1,6 @@
 import React from "react";
 import useRecipient from "../hooks/useRecipient";
+import { Recipient } from "../types/recipient";
 import { BsSearch } from "react-icons/bs";
 
 const RecipientList = () => {
@@ -13,6 +14,41 @@ const RecipientList = () => {
         .toLowerCase()
         .includes(searchRecipient.toLowerCase())
   );
+
+  const getTotalTax = (recipients: Recipient[] | undefined) => {
+    const totalTax = recipients?.map((recipient) => {
+      const calculatedTax = (recipient.amount * recipient.tax) / 100;
+      return calculatedTax;
+    });
+
+    const result = totalTax?.reduce((acc, curr) => acc + curr);
+    return result;
+  };
+
+  const getTotalDiscount = (recipients: Recipient[] | undefined) => {
+    const totalDiscount = recipients?.map((recipient) => {
+      const calculatedDiscount = (recipient.amount * recipient.discount) / 100;
+      return calculatedDiscount;
+    });
+
+    const result = totalDiscount?.reduce((acc, curr) => acc + curr);
+    return result;
+  };
+
+  const totalRecipients = filteredRecipients?.length;
+  const getTotalAmount = (recipients: Recipient[] | undefined) => {
+    const totalAmounts = recipients?.map((recipient) =>
+      Number(recipient.amount)
+    );
+    const result = totalAmounts?.reduce((acc, curr) => acc + curr);
+    return result;
+  };
+
+  const getTotal = (recipients: Recipient[] | undefined) => {
+    const totals = recipients?.map((recipient) => Number(recipient.total));
+    const result = totals?.reduce((acc, curr) => acc + curr);
+    return result;
+  };
 
   return (
     <div className="px-4 sm:px-0">
@@ -142,6 +178,39 @@ const RecipientList = () => {
                 </table>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-row-reverse px-4 py-3">
+        <div>
+          <div className="flex justify-between gap-10 items-center">
+            <p className="text-gray-400 text-sm">Recipient</p>
+            <p className="text-gray-400 text-sm">{`${totalRecipients} Recipients`}</p>
+          </div>
+
+          <div className="flex justify-between gap-10 items-center">
+            <p className="text-sm mt-2 font-bold">Total Tax</p>
+            <p className="text-sm">{`Rp ${getTotalTax(filteredRecipients)}`}</p>
+          </div>
+
+          <div className="flex justify-between gap-10 items-center">
+            <p className="text-sm mt-2 font-bold">Total Discount</p>
+            <p className="text-sm">{`Rp ${getTotalDiscount(
+              filteredRecipients
+            )}`}</p>
+          </div>
+
+          <div className="flex justify-between gap-10 items-center">
+            <p className="text-sm mt-2 font-bold">Total Amount</p>
+            <p className="text-sm">{`Rp ${getTotalAmount(
+              filteredRecipients
+            )}`}</p>
+          </div>
+
+          <div className="flex justify-between gap-10 items-center">
+            <p className="text-sm mt-2 font-bold">Total</p>
+            <p className="text-sm">{`Rp ${getTotal(filteredRecipients)}`}</p>
           </div>
         </div>
       </div>
