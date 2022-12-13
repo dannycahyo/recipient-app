@@ -1,11 +1,24 @@
 import React from "react";
 import useRecipient from "../hooks/useRecipient";
 import { Recipient } from "../types/recipient";
-import { BsSearch } from "react-icons/bs";
+import { BsSearch, BsFillTrashFill } from "react-icons/bs";
 
 const RecipientList = () => {
-  const { recipients } = useRecipient();
+  const { recipients, deleteRecipientById } = useRecipient();
   const [searchRecipient, setSearchRecipient] = React.useState<string>("");
+
+  const [selectedRecipients, setSelectedRecipients] = React.useState<string[]>(
+    []
+  );
+
+  const handleDeleteRecipient = (selectedRecipients: string[]) => {
+    selectedRecipients.forEach((recipientId: string) => {
+      deleteRecipientById(recipientId);
+      setSelectedRecipients((prevRecipients) =>
+        prevRecipients.filter((prevRecipient) => prevRecipient !== recipientId)
+      );
+    });
+  };
 
   const filteredRecipients = recipients?.filter(
     (recipient) =>
@@ -70,8 +83,17 @@ const RecipientList = () => {
           />
         </div>
 
-        <div className="pr-6">
-          <button className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 mr-2">
+        <div className="pr-6 flex gap-4">
+          {selectedRecipients.length !== 0 && (
+            <button onClick={() => handleDeleteRecipient(selectedRecipients)}>
+              <div className="flex gap-2 justify-center items-center">
+                <BsFillTrashFill color="red" />
+                <p className="text-red-500 text-sm">{`Delete ${selectedRecipients.length} selected`}</p>
+              </div>
+            </button>
+          )}
+
+          <button className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
             Undo
           </button>
           <button className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
@@ -146,6 +168,21 @@ const RecipientList = () => {
                             <input
                               type="checkbox"
                               className="text-blue-600 border-gray-200 rounded focus:ring-blue-500"
+                              onChange={(event) => {
+                                if (event.target.checked) {
+                                  setSelectedRecipients((prevRecipient) => [
+                                    ...prevRecipient,
+                                    recipient.id,
+                                  ]);
+                                } else {
+                                  setSelectedRecipients((prevRecipients) =>
+                                    prevRecipients.filter(
+                                      (prevRecipient) =>
+                                        prevRecipient !== recipient.id
+                                    )
+                                  );
+                                }
+                              }}
                             />
                             <label htmlFor="checkbox" className="sr-only">
                               Checkbox

@@ -19,3 +19,12 @@ export const addRecipient = async (newRecipient: Recipient) => {
   const recipient = await res.json();
   return recipient;
 };
+
+export const deleteRecipient = async (recipientId: string) => {
+  const res = await fetch(`http://localhost:3000/recipients/${recipientId}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  });
+  const recipient = await res.json();
+  return recipient;
+};

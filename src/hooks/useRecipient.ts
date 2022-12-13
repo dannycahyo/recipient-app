@@ -1,6 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Recipient } from "../types/recipient";
-import { getRecipients, addRecipient } from "../fetcher/recipient";
+import {
+  getRecipients,
+  addRecipient,
+  deleteRecipient,
+} from "../fetcher/recipient";
 
 export default function useRecipient() {
   const queryClient = useQueryClient();
@@ -17,8 +21,16 @@ export default function useRecipient() {
     },
   });
 
+  const { mutate: deleteRecipientById } = useMutation({
+    mutationFn: deleteRecipient,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["recipients"] });
+    },
+  });
+
   return {
     recipients,
     addNewRecipient,
+    deleteRecipientById,
   };
 }
