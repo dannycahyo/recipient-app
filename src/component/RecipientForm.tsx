@@ -23,8 +23,17 @@ const RecipientForm = () => {
         discount: 0,
       }}
       validationSchema={RecipientSchema}
-      onSubmit={(values) => {
+      onSubmit={(values, actions) => {
         addNewRecipient({ ...values, id: nanoid() });
+        actions.resetForm({
+          values: {
+            name: "",
+            description: "",
+            amount: 0,
+            tax: 0,
+            discount: 0,
+          },
+        });
       }}
     >
       {({ errors, touched }) => (
