@@ -64,7 +64,7 @@ const RecipientList = () => {
   };
 
   return (
-    <div className="px-4 sm:px-0">
+    <div className="px-4 sm:px-0 overflow-x-auto">
       <h3 className="text-lg font-medium leading-6 text-gray-900">
         List Recipients
       </h3>
@@ -92,13 +92,6 @@ const RecipientList = () => {
               </div>
             </button>
           )}
-
-          <button className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
-            Undo
-          </button>
-          <button className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
-            Redo
-          </button>
         </div>
       </div>
 
@@ -106,8 +99,8 @@ const RecipientList = () => {
         <div className="flex flex-col">
           <div className="overflow-x-auto">
             <div className="p-1.5 w-full inline-block align-middle">
-              <div className="overflow-hidden border rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
+              <div className="overflow-x-auto relative border rounded-lg">
+                <table className="min-w-full divide-y divide-gray-200 table-auto">
                   <thead className="bg-gray-50">
                     <tr>
                       <th scope="col" className="py-3 pl-4">
